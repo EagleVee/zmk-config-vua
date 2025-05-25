@@ -1,0 +1,99 @@
+#
+# Copyright (c) 2023 Deemen17
+# SPDX-License-Identifier: MIT
+#
+
+if BOARD_VUA_DONGLE
+
+	config ZMK_KEYBOARD_NAME
+		default "VU.A"
+
+	config ZMK_SPLIT
+		default y
+
+	config ZMK_SPLIT_BLE_ROLE_CENTRAL
+		default y
+
+endif # BOARD_VUA_DONGLE
+
+if BOARD_VUA_LEFT || BOARD_VUA_RIGHT
+
+	config BOARD
+		default "VUA"
+
+	config I2C
+		bool
+		default y
+
+	config SPI
+		bool
+		default y
+
+endif # BOARD_VUA_LEFT || BOARD_VUA_RIGHT
+
+if BOARD_VUA_LEFT || BOARD_VUA_RIGHT || BOARD_VUA_DONGLE
+
+	config ZMK_SPLIT
+		default y
+
+	if USB
+
+		config USB_DEVICE_STACK
+			default y
+
+		if USB_DEVICE_STACK
+
+			config USB_NRFX
+				default y
+
+		endif # USB_DEVICE_STACK
+
+	endif # USB
+
+	config BT_CTLR
+		default BT
+
+	if ZMK_DISPLAY
+
+		config I2C
+			default y
+
+		config SSD1306
+			default y
+
+		choice ZMK_DISPLAY_WORK_QUEUE
+			default ZMK_DISPLAY_WORK_QUEUE_DEDICATED
+		endchoice
+
+	endif # ZMK_DISPLAY
+
+	if SSD1306
+
+		config LV_Z_VDB_SIZE
+			default 64
+
+		config LV_DPI_DEF
+			default 148
+
+		config LV_Z_BITS_PER_PIXEL
+			default 1
+
+		choice LV_COLOR_DEPTH
+			default LV_COLOR_DEPTH_1
+		endchoice
+
+	endif # SSD1306
+
+	if ZMK_BACKLIGHT
+
+		config PWM
+			default y
+
+		config LED_PWM
+			default y
+
+	endif # ZMK_BACKLIGHT
+
+endif # BOARD_VUA_LEFT || BOARD_VUA_RIGHT || BOARD_VUA_DONGLE
+
+
