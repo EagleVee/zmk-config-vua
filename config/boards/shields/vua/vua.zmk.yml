@@ -1,9 +1,10 @@
 file_format: "1"
 id: vua
-name: vua
+name: VUA
 url: https://github.com/Deemen17
-type: board
+type: shield
 arch: arm
+requires: [pro_micro]
 features:
   - keys
   - display
