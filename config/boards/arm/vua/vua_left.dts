@@ -1,0 +1,61 @@
+/*
+*
+* Copyright (c) 2023 Deemen17
+* SPDX-License-Identifier: MIT
+*
+*/
+
+#include "vua.dtsi"
+#include <dt-bindings/led/led.h>
+
+/ {
+    chosen {
+        zmk,battery = &vbatt;
+    };
+};
+
+/{
+    leds {
+        compatible = "gpio-leds";
+        blue_led: led_0 {
+            gpios = <&gpio1 2 GPIO_ACTIVE_HIGH>;
+            label = "Blue LED Left";
+        };
+    };
+
+    vbatt: vbatt {
+        compatible = "zmk,battery-voltage-divider";
+        label = "VBATT";
+        io-channels = <&adc 0>;
+		output-ohms = <2000000>;
+		full-ohms = <(2000000 + 820000)>;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        label = "KSCAN";
+        diode-direction = "col2row";
+
+        row-gpios
+            = <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 30 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&gpio1 0  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            ;
+
+        col-gpios
+            = <&gpio1 11 GPIO_ACTIVE_HIGH>
+            , <&gpio1 10 GPIO_ACTIVE_HIGH>
+            , <&gpio0 3  GPIO_ACTIVE_HIGH>
+            , <&gpio1 13 GPIO_ACTIVE_HIGH>
+            , <&gpio0 5  GPIO_ACTIVE_HIGH>
+            , <&gpio0 22 GPIO_ACTIVE_HIGH>
+            , <&gpio0 20 GPIO_ACTIVE_HIGH>
+            , <&gpio0 17 GPIO_ACTIVE_HIGH>
+            , <&gpio0 15 GPIO_ACTIVE_HIGH>
+            ;
+    };
+
+};   
+

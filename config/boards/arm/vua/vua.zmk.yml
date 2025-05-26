@@ -1,0 +1,17 @@
+file_format: "1"
+id: vua
+name: vua
+url: https://github.com/Deemen17
+type: board
+arch: arm
+requires: [pro_micro]
+features:
+  - keys
+  - display
+outputs:
+  - usb
+  - ble
+siblings:
+  - vua_dongle
+  - vua_left
+  - vua_right
