@@ -3,7 +3,7 @@ VUA
 
 Build Simple Dongle
 ```bash
-west build -p always -b nice_nano_v2 -d build/donglesimple zmk/app -- -DSHIELD=via_dongle_simple -DSNIPPET=studio-rpc-usb-uart -DCONFIG_ZMK_STUDIO=y
+west build -p always -b nice_nano_v2 -d build/donglesimple zmk/app -- -DSHIELD=vua_dongle_simple -DSNIPPET=studio-rpc-usb-uart -DCONFIG_ZMK_STUDIO=y
 ```
 
 Build Dongle Display

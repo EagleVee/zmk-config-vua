@@ -20,11 +20,11 @@
             label = "Base";
 
             bindings = <
-&kp F1  &kp F2  &kp ESC     &kp N1      &kp N2      &kp N3      &kp N4      &kp N5  &kp N6          &kp N7      &kp N8     &kp N9   &kp N0      &kp MINUS   &kp EQUAL   &kp BSPC    &kp BSPC    &kp HOME
-&kp F3  &kp F4  &kp TAB     &kp Q       &kp W       &kp E       &kp R       &kp T                   &kp Y       &kp U      &kp I    &kp O       &kp P       &kp LBKT    &kp RBKT    &kp BSLH     &kp DEL
-&kp F5  &kp F6  &kp CLCK    &kp A       &kp S       &kp D       &kp F       &kp G                   &kp H       &kp J      &kp K    &kp L       &kp SEMI    &kp SQT     &kp RET                 &kp PG_UP
-&kp F7  &kp F8  &kp LSHFT               &kp Z       &kp X       &kp C       &kp V   &kp B                       &kp N      &kp M    &kp COMMA   &kp DOT     &kp SLASH   &kp RSHFT   &kp UP      &kp PG_DN
-&kp F9  &kp F10 &kp LCTRL   &kp LGUI                &kp LALT    &mo 1       &kp SPACE                           &kp SPACE                       &kp RALT    &kp RCTRL   &kp LEFT    &kp DOWN    &kp RIGHT
+&kp GRAVE     &mo 1              &gresc     &kp N1    &kp N2  &kp N3    &kp N4  &kp N5     &kp N6  &kp N7  &kp N8     &kp N9  &kp N0     &kp MINUS      &kp EQUAL  &kp BACKSLASH  &kp DELETE     &kp HOME
+&kp INSERT    &kp DELETE         &kp TAB    &kp Q     &kp W   &kp E     &kp R   &kp T              &kp Y   &kp U      &kp I   &kp O      &kp P          &kp LBKT   &kp RBKT       &kp BACKSPACE  &kp PAGE_UP
+&kp HOME      &kp END            &mo 1      &kp A     &kp S   &kp D     &kp F   &kp G              &kp H   &kp J      &kp K   &kp L      &kp SEMICOLON  &kp SQT                   &kp RET        &kp PAGE_DOWN
+&kp PAGE_UP   &kp PAGE_DOWN      &kp LSHFT            &kp Z   &kp X     &kp C   &kp V      &kp B           &kp N      &kp M   &kp COMMA  &kp DOT        &kp SLASH  &kp RSHFT      &kp UP         &kp END
+&kp C_VOL_UP  &kp C_VOLUME_DOWN  &kp LCTRL  &kp LGUI          &kp LALT  &mo 1   &kp SPACE                  &kp SPACE                     &mo 1          &kp RCTRL  &kp LEFT       &kp DOWN       &kp RIGHT
             >;
 
         };
@@ -33,13 +33,24 @@
             label = "Functions";
 
             bindings = <
-&bootloader &trans  &trans  &kp F1  &kp F2  &kp F3  &kp F4  &kp F5  &kp F6      &kp F7  &kp F8  &kp F9  &kp F10 &kp F11 &kp F12 &trans  &trans  &bootloader
-&sys_reset  &trans  &trans  &trans  &trans  &trans  &trans  &trans              &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &sys_reset
-&trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans              &trans  &trans  &trans  &trans  &trans  &trans  &trans          &trans 
-&trans      &trans  &trans          &trans  &trans  &trans  &trans  &trans              &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans 
-&trans      &trans  &trans  &trans          &trans  &trans  &trans                      &trans                  &trans  &trans  &trans  &trans  &trans 
+&bootloader  &studio_unlock     &kp TILDE  &kp F1    &kp F2    &kp F3     &kp F4  &kp F5  &kp F6  &kp F7  &kp F8  &kp F9  &kp F10  &kp F11  &kp F12  &trans    &studio_unlock       &bootloader
+&sys_reset   &trans             &trans     &trans    &kp UP    &trans     &trans  &trans          &trans  &trans  &trans  &trans   &trans   &trans   &trans    &trans               &sys_reset
+&bt BT_PRV   &bt BT_NXT         &kp CAPS   &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans          &trans  &trans  &trans  &trans   &trans   &trans             &trans               &bt BT_NXT
+&bt BT_CLR   &trans             &trans               &trans    &trans     &trans  &trans  &trans          &trans  &trans  &trans   &trans   &trans   &trans    &kp PAGE_UP          &bt BT_CLR
+&tog 0       &tog 2             &trans     &trans              &trans     &trans  &trans                  &trans                   &trans   &trans   &kp HOME  &kp END              &kp END
             >;
+        };
 
+        gaming_layer {
+            label = "Gaming";
+            
+            bindings = <
+&kp GRAVE        &mo 1          &gresc     &kp N1        &kp N2  &kp N3        &kp N4     &kp N5     &kp N6  &kp N7  &kp N8     &kp N9  &kp N0     &kp MINUS  &kp EQUAL      &kp BSLH        &kp DELETE      &kp HOME
+&kp INSERT       &kp DEL        &kp TAB    &kp Q         &kp W   &kp E         &kp R      &kp T              &kp Y   &kp U      &kp I   &kp O      &kp P      &kp LBKT       &kp RBKT        &kp BSPC        &kp PAGE_UP
+&kp HOME         &kp END        &kp CAPS   &kp A         &kp S   &kp D         &kp F      &kp G              &kp H   &kp J      &kp K   &kp L      &kp SEMI   &kp APOS                       &kp ENTER       &kp PAGE_DOWN
+&kp PAGE_UP      &kp PAGE_DOWN  &kp LSHFT                &kp Z   &kp X         &kp C      &kp V      &kp B           &kp N      &kp M   &kp COMMA  &kp DOT    &kp FSLH       &kp RSHFT       &kp UP_ARROW    &kp END
+&kp C_VOLUME_UP  &kp C_VOL_DN   &kp LCTRL  &kp LEFT_GUI          &kp LEFT_ALT  &kp SPACE  &kp SPACE                  &kp SPACE                     &mo 1      &kp RIGHT_ALT  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT
+            >;
         };
     };
 };
