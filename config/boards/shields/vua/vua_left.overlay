@@ -17,7 +17,7 @@
 /{
     leds {
         compatible = "gpio-leds";
-        blue_led: led_0 {
+        left_left: led_0 {
             gpios = <&gpio1 2 GPIO_ACTIVE_HIGH>;
             label = "Blue LED Left";
         };

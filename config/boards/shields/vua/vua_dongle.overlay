@@ -9,14 +9,19 @@
 
 /{
     chosen {
-        zmk,kscan = &mock_kscan;
+        zmk,kscan = &kscan0;
         zephyr,display = &oled;
     };
-    mock_kscan: kscan_1 {
-        compatible = "zmk,kscan-mock";
-        columns = <0>;
-        rows = <0>;
-        events = <0>;
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        label = "KSCAN";
+        diode-direction = "row2col";
+
+        /* one row on P0.09, pulled-down */
+        row-gpios = <&gpio0 9 GPIO_ACTIVE_HIGH>;
+
+        /* one column on P0.10, pulled-down */
+        col-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
     };
 };
 

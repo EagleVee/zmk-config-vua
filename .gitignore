@@ -1,0 +1,10 @@
+build/
+zmk/
+modules/
+tools/
+.west/
+zephyr/
+zmk-dongle-display/
+hammerbeam-slideshow/
+prospector-zmk-module/
+output/
