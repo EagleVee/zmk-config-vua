@@ -8,7 +8,8 @@ set -euo pipefail
 declare -A FW_MAP=(
   [left]="left.uf2"
   [right]="right.uf2"
-  [dongle]="dongle.uf2"
+  [dongledisplay]="dongle_display.uf2"
+  [donglesimple]="dongle_simple.uf2"
   [reset]="reset.uf2"
 )
 

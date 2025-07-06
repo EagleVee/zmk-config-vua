@@ -12,6 +12,7 @@ outputs:
   - usb
   - ble
 siblings:
-  - vua_dongle
+  - vua_dongle_eyeslash
+  - vua_dongle_simple
   - vua_left
   - vua_right

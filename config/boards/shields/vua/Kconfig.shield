@@ -3,8 +3,11 @@
 # SPDX-License-Identifier: MIT
 #
 
-config BOARD_VUA_DONGLE
-	def_bool $(shields_list_contains,vua_dongle)
+config BOARD_VUA_DONGLE_DISPLAY
+	def_bool $(shields_list_contains,vua_dongle_display)
+
+config BOARD_VUA_DONGLE_SIMPLE
+	def_bool $(shields_list_contains,vua_dongle_simple)
 
 config BOARD_VUA_LEFT
 	def_bool $(shields_list_contains,vua_left)

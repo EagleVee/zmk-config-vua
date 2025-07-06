@@ -9,7 +9,8 @@ $ErrorActionPreference = 'Stop'    # fail fast on any error
 $fwMap = @{
     left   = 'left.uf2'
     right  = 'right.uf2'
-    dongle = 'dongle.uf2'
+    dongledisplay = 'dongle_display.uf2'
+    donglesimple = 'dongle_simple.uf2'
     reset  = 'reset.uf2'
 }
 
