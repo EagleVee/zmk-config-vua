@@ -9,7 +9,7 @@ west build -p always -b nice_nano_v2 -d build/donglesimple zmk/app -- -DSHIELD=v
 Build Dongle Display
 
 ```bash
-west build -p always -b nice_nano_v2 -d build/dongledisplay zmk/app -- -DSHIELD="vua_dongle_eyeslash dongle_display" -DSNIPPET=studio-rpc-usb-uart -DCONFIG_ZMK_STUDIO=y -DCONFIG_ZMK_STUDIO_LOCKING=n
+west build -p always -b nice_nano_v2 -d build/dongledisplay zmk/app -- -DSHIELD="vua_dongle_display dongle_display" -DSNIPPET=studio-rpc-usb-uart -DCONFIG_ZMK_STUDIO=y -DCONFIG_ZMK_STUDIO_LOCKING=n
 ```
 
 

@@ -14,10 +14,10 @@
 ---
 include:
   - board: nice_nano_v2
-    shield: vua_dongle_eyeslash dongle_display
+    shield: vua_dongle_display dongle_display
     snippet: studio-rpc-usb-uart
     cmake-args: -DCONFIG_ZMK_STUDIO=y -DCONFIG_ZMK_STUDIO_LOCKING=n
-    artifact-name: vua_dongle_eyeslash
+    artifact-name: vua_dongle_display
   - board: nice_nano_v2
     shield: vua_dongle_simple dongle_display
     snippet: studio-rpc-usb-uart
