@@ -26,3 +26,9 @@ include:
     artifact-name: vua_right
   - board: nice_nano_v2
     shield: settings_reset
+  - board: vua_left
+  - board: vua_right
+  - board: vua_left
+    shield: settings_reset
+  - board: vua_right
+    shield: settings_reset
