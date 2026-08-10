@@ -29,8 +29,15 @@ config ZMK_SPLIT
 config ZMK_BATTERY_VOLTAGE_DIVIDER
 	default y
 
-config BT_CTLR
-	default BT
+# Increase the radio transmit power. Guarded by BT so builds with the BLE stack
+# off (e.g. settings_reset) don't select into a choice that has no selection.
+if BT
+
+choice BT_CTLR_TX_PWR
+	default BT_CTLR_TX_PWR_PLUS_8
+endchoice
+
+endif # BT
 
 if USB
 
