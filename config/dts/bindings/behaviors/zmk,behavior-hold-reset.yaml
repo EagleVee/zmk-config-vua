@@ -1,0 +1,29 @@
+# Copyright (c) 2026 Deemen17
+# SPDX-License-Identifier: MIT
+
+description: |
+  Reset behavior that only fires once the key has been held for a minimum
+  duration, then released.
+
+  Unlike the stock &sys_reset / &bootloader behaviors, this is safe to invoke
+  from a zmk,kscan-sideband-behaviors entry pointed at a key that is also part
+  of the normal matrix: a short tap does nothing, so the key keeps its usual
+  meaning. Because sideband entries run locally, this works on a split
+  peripheral even while it is disconnected from the central.
+
+compatible: "zmk,behavior-hold-reset"
+
+include: zero_param.yaml
+
+properties:
+  hold-time-ms:
+    type: int
+    default: 3000
+    description: Milliseconds the key must be held before releasing it triggers the reset.
+  bootloader:
+    type: boolean
+    description: Reboot into the bootloader rather than back into the firmware.
+  type:
+    type: int
+    default: 0
+    description: Legacy sys_reboot() type, used only when boot retention is unavailable.

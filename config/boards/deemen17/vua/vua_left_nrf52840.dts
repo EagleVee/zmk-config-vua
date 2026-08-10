@@ -47,4 +47,28 @@
             , <&gpio0 15 GPIO_ACTIVE_HIGH>
             ;
     };
+
+    /*
+     * Wraps the matrix so the top-left key (GRAVE, local row 0 / column 0) also
+     * runs &hold_rst locally. Key events still pass through to normal keymap
+     * processing, so a tap is unaffected; only a 3 second hold resets.
+     */
+    sideband: sideband {
+        compatible = "zmk,kscan-sideband-behaviors";
+        kscan = <&kscan0>;
+        auto-enable;
+        wakeup-source;
+
+        hold_reset_key {
+            row = <0>;
+            column = <0>;
+            bindings = <&hold_rst>;
+        };
+    };
+};
+
+/ {
+    chosen {
+        zmk,kscan = &sideband;
+    };
 };

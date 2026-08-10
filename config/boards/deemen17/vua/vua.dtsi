@@ -23,6 +23,24 @@
         zmk,matrix_transform = &default_transform;
     };
 
+    behaviors {
+        /*
+         * Hold-to-reset, wired to one key per half via a kscan sideband entry
+         * (see the per-half .dts files). Sideband entries run locally on the
+         * half that owns the key, without any keymap processing, so this is how
+         * the peripheral can reset itself while disconnected from the central.
+         *
+         * Add a `bootloader;` property here to enter the bootloader instead of
+         * rebooting back into the firmware.
+         */
+        hold_rst: hold_rst {
+            compatible = "zmk,behavior-hold-reset";
+            #binding-cells = <0>;
+            hold-time-ms = <3000>;
+            display-name = "Hold Reset";
+        };
+    };
+
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <18>;
