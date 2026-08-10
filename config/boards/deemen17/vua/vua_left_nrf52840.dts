@@ -1,20 +1,11 @@
 /*
-*
-* Copyright (c) 2023 Deemen17
-* SPDX-License-Identifier: MIT
-*
-*/
+ * Copyright (c) 2023 Deemen17
+ * SPDX-License-Identifier: MIT
+ */
 
 #include "vua.dtsi"
-#include <dt-bindings/led/led.h>
 
 / {
-    chosen {
-        zmk,battery = &vbatt;
-    };
-};
-
-/{
     leds {
         compatible = "gpio-leds";
         blue_led: led_0 {
@@ -25,15 +16,15 @@
 
     vbatt: vbatt {
         compatible = "zmk,battery-voltage-divider";
-        label = "VBATT";
         io-channels = <&adc 0>;
-		output-ohms = <2000000>;
-		full-ohms = <(2000000 + 820000)>;
+        output-ohms = <2000000>;
+        full-ohms = <(2000000 + 820000)>;
     };
 
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN";
+        wakeup-source;
+
         diode-direction = "col2row";
 
         row-gpios
@@ -56,6 +47,4 @@
             , <&gpio0 15 GPIO_ACTIVE_HIGH>
             ;
     };
-
-};   
-
+};

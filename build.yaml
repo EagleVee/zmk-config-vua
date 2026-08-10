@@ -8,11 +8,17 @@
 # shield: [ "corne_left", "corne_right" ]
 # include:
 #   - board: bdn9_rev2
-#   - board: nice_nano_v2 
+#   - board: nice_nano_v2
 #     shield: reviung41
 #
 ---
 include:
-  - board: vua_dongle
+  # Standard split firmware: left half is the central, right half the peripheral.
   - board: vua_left
   - board: vua_right
+  # Settings reset images, used to clear the stored BLE pairings on each half.
+  # See https://zmk.dev/docs/troubleshooting/connection-issues#split-keyboard-halves-unable-to-pair
+  - board: vua_left
+    shield: settings_reset
+  - board: vua_right
+    shield: settings_reset

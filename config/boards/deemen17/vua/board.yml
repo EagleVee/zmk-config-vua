@@ -1,0 +1,9 @@
+boards:
+  - name: vua_left
+    vendor: deemen17
+    socs:
+      - name: nrf52840
+  - name: vua_right
+    vendor: deemen17
+    socs:
+      - name: nrf52840

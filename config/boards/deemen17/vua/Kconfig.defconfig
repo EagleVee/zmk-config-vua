@@ -1,0 +1,45 @@
+#
+# Copyright (c) 2023 Deemen17
+# SPDX-License-Identifier: MIT
+#
+
+if BOARD_VUA_LEFT
+
+config ZMK_KEYBOARD_NAME
+	default "VU.A"
+
+# The left half is the central: it talks to the host and to the right half.
+config ZMK_SPLIT_ROLE_CENTRAL
+	default y
+
+endif # BOARD_VUA_LEFT
+
+if BOARD_VUA_RIGHT
+
+config ZMK_KEYBOARD_NAME
+	default "VU.A right"
+
+endif # BOARD_VUA_RIGHT
+
+if BOARD_VUA_LEFT || BOARD_VUA_RIGHT
+
+config ZMK_SPLIT
+	default y
+
+config ZMK_BATTERY_VOLTAGE_DIVIDER
+	default y
+
+config BT_CTLR
+	default BT
+
+if USB
+
+config USB_DEVICE_STACK
+	default y
+
+config USB_NRFX
+	default y
+
+endif # USB
+
+endif # BOARD_VUA_LEFT || BOARD_VUA_RIGHT
