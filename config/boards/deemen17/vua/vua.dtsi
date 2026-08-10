@@ -30,13 +30,16 @@
          * half that owns the key, without any keymap processing, so this is how
          * the peripheral can reset itself while disconnected from the central.
          *
-         * Add a `bootloader;` property here to enter the bootloader instead of
-         * rebooting back into the firmware.
+         * Two tiers, both decided when the key is released:
+         *   hold 3-5s  -> reboot
+         *   hold 5s+   -> reboot into the bootloader
+         * A tap is ignored, so the key keeps its normal meaning.
          */
         hold_rst: hold_rst {
             compatible = "zmk,behavior-hold-reset";
             #binding-cells = <0>;
             hold-time-ms = <3000>;
+            bootloader-hold-time-ms = <5000>;
             display-name = "Hold Reset";
         };
     };

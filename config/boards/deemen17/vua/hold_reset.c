@@ -12,6 +12,7 @@
 
 #include <drivers/behavior.h>
 
+#include <dt-bindings/zmk/reset.h>
 #include <zmk/behavior.h>
 
 #if IS_ENABLED(CONFIG_RETENTION_BOOT_MODE)
@@ -26,6 +27,8 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 struct behavior_hold_reset_config {
     uint32_t hold_time_ms;
+    /* 0 disables the second tier. */
+    uint32_t bootloader_hold_time_ms;
 #if IS_ENABLED(CONFIG_RETENTION_BOOT_MODE)
     enum BOOT_MODE_TYPES boot_mode;
 #else
@@ -55,16 +58,25 @@ static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
 
     int64_t hold_time = k_uptime_get() - data->press_start;
 
-    if (hold_time < cfg->hold_time_ms) {
+    /*
+     * The tier is picked on release rather than as soon as a threshold passes,
+     * because firing at hold-time-ms would reset before the longer hold could
+     * ever be reached. Releasing between the two thresholds is what selects the
+     * shorter action.
+     */
+    bool to_bootloader =
+        cfg->bootloader_hold_time_ms > 0 && hold_time >= cfg->bootloader_hold_time_ms;
+
+    if (!to_bootloader && hold_time < cfg->hold_time_ms) {
         LOG_DBG("Not resetting: held for %lld ms, hold time is %u ms", hold_time,
                 cfg->hold_time_ms);
         return ZMK_BEHAVIOR_OPAQUE;
     }
 
-    LOG_WRN("Held for %lld ms, resetting", hold_time);
+    LOG_WRN("Held for %lld ms, resetting%s", hold_time, to_bootloader ? " to the bootloader" : "");
 
 #if IS_ENABLED(CONFIG_RETENTION_BOOT_MODE)
-    int ret = bootmode_set(cfg->boot_mode);
+    int ret = bootmode_set(to_bootloader ? BOOT_MODE_TYPE_BOOTLOADER : cfg->boot_mode);
     if (ret < 0) {
         LOG_ERR("Failed to set the boot mode (%d)", ret);
         return ZMK_BEHAVIOR_OPAQUE;
@@ -72,7 +84,7 @@ static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
 
     sys_reboot(SYS_REBOOT_WARM);
 #else
-    sys_reboot(cfg->type);
+    sys_reboot(to_bootloader ? RST_UF2 : cfg->type);
 #endif /* IS_ENABLED(CONFIG_RETENTION_BOOT_MODE) */
 
     return ZMK_BEHAVIOR_OPAQUE;
@@ -95,9 +107,13 @@ static const struct behavior_driver_api behavior_hold_reset_driver_api = {
 #endif /* IS_ENABLED(CONFIG_RETENTION_BOOT_MODE) */
 
 #define HR_INST(n)                                                                                 \
+    BUILD_ASSERT(DT_INST_PROP(n, bootloader_hold_time_ms) == 0 ||                                  \
+                     DT_INST_PROP(n, bootloader_hold_time_ms) > DT_INST_PROP(n, hold_time_ms),     \
+                 "bootloader-hold-time-ms must be greater than hold-time-ms");                     \
     static struct behavior_hold_reset_data behavior_hold_reset_data_##n = {};                      \
     static const struct behavior_hold_reset_config behavior_hold_reset_config_##n = {              \
         .hold_time_ms = DT_INST_PROP(n, hold_time_ms),                                             \
+        .bootloader_hold_time_ms = DT_INST_PROP(n, bootloader_hold_time_ms),                       \
         HR_BOOT_TARGET(n),                                                                         \
     };                                                                                             \
     BEHAVIOR_DT_INST_DEFINE(n, NULL, NULL, &behavior_hold_reset_data_##n,                          \

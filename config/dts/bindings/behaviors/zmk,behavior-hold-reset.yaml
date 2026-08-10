@@ -11,6 +11,10 @@ description: |
   meaning. Because sideband entries run locally, this works on a split
   peripheral even while it is disconnected from the central.
 
+  Setting bootloader-hold-time-ms adds a second, longer tier that reboots into
+  the bootloader. The tier is decided on release, so the shorter action is
+  selected by releasing between the two thresholds.
+
 compatible: "zmk,behavior-hold-reset"
 
 include: zero_param.yaml
@@ -20,9 +24,17 @@ properties:
     type: int
     default: 3000
     description: Milliseconds the key must be held before releasing it triggers the reset.
+  bootloader-hold-time-ms:
+    type: int
+    default: 0
+    description: >
+      Milliseconds the key must be held for the reset to enter the bootloader
+      instead. Must be greater than hold-time-ms. 0 disables this second tier.
   bootloader:
     type: boolean
-    description: Reboot into the bootloader rather than back into the firmware.
+    description: >
+      Make the hold-time-ms tier itself enter the bootloader, rather than
+      rebooting back into the firmware.
   type:
     type: int
     default: 0
