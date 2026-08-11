@@ -23,27 +23,6 @@
         zmk,matrix_transform = &default_transform;
     };
 
-    behaviors {
-        /*
-         * Hold-to-reset, wired to one key per half via a kscan sideband entry
-         * (see the per-half .dts files). Sideband entries run locally on the
-         * half that owns the key, without any keymap processing, so this is how
-         * the peripheral can reset itself while disconnected from the central.
-         *
-         * Two tiers, both decided when the key is released:
-         *   hold 3-5s  -> reboot
-         *   hold 5s+   -> reboot into the bootloader
-         * A tap is ignored, so the key keeps its normal meaning.
-         */
-        hold_rst: hold_rst {
-            compatible = "zmk,behavior-hold-reset";
-            #binding-cells = <0>;
-            hold-time-ms = <3000>;
-            bootloader-hold-time-ms = <5000>;
-            display-name = "Hold Reset";
-        };
-    };
-
     default_transform: keymap_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <18>;
