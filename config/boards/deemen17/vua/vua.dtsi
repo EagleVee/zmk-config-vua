@@ -38,9 +38,18 @@
 
 };
 
-/* Enable the DC/DC regulator for reg1 (inductor on the DCC pin). */
+/*
+ * DC/DC regulators. The pre-HWMv2 config enabled both stages via
+ * CONFIG_SOC_DCDC_NRF52X and CONFIG_SOC_DCDC_NRF52X_HV, which are consumed in
+ * soc/nordic/nrf52/soc.c; the devicetree equivalents below are what that same
+ * code now checks. reg1 is the DCC-pin stage, reg0 the high-voltage DCCH stage.
+ */
 &reg1 {
     regulator-initial-mode = <NRF5X_REG_MODE_DCDC>;
+};
+
+&reg0 {
+    status = "okay";
 };
 
 &adc {
