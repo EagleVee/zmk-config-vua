@@ -47,6 +47,31 @@
             , <&gpio1 4  GPIO_ACTIVE_HIGH>
             ;
     };
+
+    /*
+     * Wraps the matrix so the top-right key (HOME, local row 0 / column 8) also
+     * runs &hold_rst locally. This is the one that matters: the peripheral runs
+     * no keymap, so without this there is no way to reset this half from its own
+     * keys once it loses the central.
+     */
+    sideband: sideband {
+        compatible = "zmk,kscan-sideband-behaviors";
+        kscan = <&kscan0>;
+        auto-enable;
+        wakeup-source;
+
+        hold_reset_key {
+            row = <0>;
+            column = <8>;
+            bindings = <&hold_rst>;
+        };
+    };
+};
+
+/ {
+    chosen {
+        zmk,kscan = &sideband;
+    };
 };
 
 &default_transform {
