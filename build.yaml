@@ -11,14 +11,41 @@
 #   - board: nice_nano_v2
 #     shield: reviung41
 #
+# Every target is built twice, once for each bootloader flash layout. The plain
+# images link the application at 0x26000, which is where a bootloader that
+# reserves space for a SoftDevice expects it. The `-nosd` images use ZMK's
+# nrf52840-nosd snippet to link at 0x1000 instead, for a bootloader built
+# without a SoftDevice.
+#
+# Flashing the wrong one is silent and total: the bootloader accepts the file,
+# jumps to an address the image is not at, and the board locks up with no USB,
+# no BLE and no keys, while the bootloader itself keeps working. Check which one
+# a board needs with `cat /Volumes/*/INFO_UF2.TXT` (macOS) or by opening
+# INFO_UF2.TXT on the bootloader drive, and read the `SoftDevice:` line. See
+# README.md.
 ---
 include:
   # Standard split firmware: left half is the central, right half the peripheral.
   - board: vua_left
   - board: vua_right
+  - board: vua_left
+    snippet: nrf52840-nosd
+    artifact-name: vua_left-nosd
+  - board: vua_right
+    snippet: nrf52840-nosd
+    artifact-name: vua_right-nosd
+
   # Settings reset images, used to clear the stored BLE pairings on each half.
   # See https://zmk.dev/docs/troubleshooting/connection-issues#split-keyboard-halves-unable-to-pair
   - board: vua_left
     shield: settings_reset
   - board: vua_right
     shield: settings_reset
+  - board: vua_left
+    shield: settings_reset
+    snippet: nrf52840-nosd
+    artifact-name: settings_reset-vua_left-nosd
+  - board: vua_right
+    shield: settings_reset
+    snippet: nrf52840-nosd
+    artifact-name: settings_reset-vua_right-nosd
