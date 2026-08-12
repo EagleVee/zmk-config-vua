@@ -43,6 +43,17 @@ the `-nosd` image.
 **The two halves may need different images** — bootloaders are per board, not
 per keyboard, and mixed sets are common on hand-built boards.
 
+On this keyboard they do differ. Both halves carry the same UF2 bootloader
+(`0.5.0-dirty`, `Board-ID: nRF52840-pca10056-v1`, Apr 17 2021), but only one has
+a SoftDevice:
+
+| Half | `SoftDevice:` | Flash |
+| --- | --- | --- |
+| Left | `not found` | `vua_left-nosd`, `settings_reset-vua_left-nosd` |
+| Right | `S140 version 6.1.1` | `vua_right`, `settings_reset-vua_right` |
+
+Re-check with `INFO_UF2.TXT` if a board's bootloader is ever reflashed.
+
 Flashing the wrong layout fails silently and completely. The bootloader accepts
 the file, reboots, jumps to an address the image is not at, and locks up: no USB
 device, no BLE advertisement, no keys, nothing on the console. The bootloader
