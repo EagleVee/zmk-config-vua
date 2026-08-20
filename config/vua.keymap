@@ -8,6 +8,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/outputs.h>
 
 / {
     behaviors {
@@ -36,11 +37,28 @@
 
         function_layer {
             display-name = "Functions";
+
+            /*
+             * &studio_unlock sits on the second macro key of the home row (M6).
+             * ZMK Studio connects read-only until it is pressed; without an
+             * unlock key the keymap can be viewed but never edited. It re-locks
+             * after 10 minutes idle and whenever Studio disconnects.
+             *
+             * Only the left half builds with ZMK Studio, so on the right half
+             * and in the settings_reset images this binding does nothing.
+             *
+             * Z and X pin the HID output to USB and to BLE, and the choice is
+             * stored in settings. That is what makes a BLE-only fault
+             * debuggable: pick BLE, then stay plugged into USB for the
+             * zmk-usb-logging console while the keyboard actually runs over the
+             * radio. USB still supplies power, so this will not reproduce
+             * anything that depends on the battery supply.
+             */
             bindings = <
 &bootloader  &trans  &kp TILDE  &kp F1    &kp F2    &kp F3     &kp F4  &kp F5  &kp F6  &kp F7  &kp F8  &kp F9  &kp F10  &kp F11  &kp F12  &trans    &trans       &bootloader
 &sys_reset   &trans  &trans     &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_CLR  &bt BT_CLR_ALL  &trans  &trans  &trans  &trans   &trans   &trans   &trans    &trans       &sys_reset
-&trans       &trans  &kp CAPS   &trans    &trans    &trans     &trans  &trans          &trans  &trans  &trans  &trans   &trans   &trans             &trans       &trans
-&trans       &trans  &trans               &trans    &trans     &trans  &trans  &trans          &trans  &trans  &trans   &trans   &trans   &trans    &kp PAGE_UP  &trans
+&trans       &studio_unlock  &kp CAPS   &trans    &trans    &trans     &trans  &trans          &trans  &trans  &trans  &trans   &trans   &trans             &trans       &trans
+&trans       &trans  &trans               &out OUT_USB  &out OUT_BLE  &trans  &trans  &trans          &trans  &trans  &trans   &trans   &trans   &trans    &kp PAGE_UP  &trans
 &tog 0       &tog 2  &trans     &trans              &trans     &trans  &trans                  &trans                   &trans   &trans   &kp HOME  &kp END      &kp END
             >;
         };

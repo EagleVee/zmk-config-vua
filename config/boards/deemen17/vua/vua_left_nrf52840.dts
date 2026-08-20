@@ -49,9 +49,15 @@
     };
 
     /*
-     * Wraps the matrix so the top-left key (GRAVE, local row 0 / column 0) also
-     * runs &hold_rst locally. Key events still pass through to normal keymap
-     * processing, so a tap is unaffected; only a 3 second hold resets.
+     * Wraps the matrix so the two top-left macro keys also run a reset locally.
+     * Key events still pass through to normal keymap processing, so a tap is
+     * unaffected; only a 3 second hold fires.
+     *
+     *   M1 (row 0 / column 0) -> reboot
+     *   M2 (row 0 / column 1) -> reboot into the bootloader
+     *
+     * Note M2 is &mo 1 in the keymap: holding the function layer for 3 seconds
+     * lands in the bootloader. See README.md.
      */
     sideband: sideband {
         compatible = "zmk,kscan-sideband-behaviors";
@@ -63,6 +69,12 @@
             row = <0>;
             column = <0>;
             bindings = <&hold_rst>;
+        };
+
+        hold_boot_key {
+            row = <0>;
+            column = <1>;
+            bindings = <&hold_boot>;
         };
     };
 };

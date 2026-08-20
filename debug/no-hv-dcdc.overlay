@@ -1,0 +1,17 @@
+/*
+ * Bisect overlay: build with the high-voltage DC/DC stage off.
+ *
+ * vua.dtsi sets `&reg0 { status = "okay"; }`, which is what makes
+ * soc/nordic/nrf52/soc.c call nrf_power_dcdcen_vddh_set(). That was restored in
+ * 8d6a7ae after the HWMv2 migration had silently dropped it. Disabling the node
+ * here puts REG0 back to running as an LDO, which is how the board behaved
+ * between 513163d and 8d6a7ae.
+ *
+ * reg1, the DCC-pin stage, is left alone.
+ *
+ * Usage: see README.md "Bisecting the BLE instability".
+ */
+
+&reg0 {
+    status = "disabled";
+};

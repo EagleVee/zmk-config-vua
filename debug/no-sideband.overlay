@@ -1,0 +1,24 @@
+/*
+ * Bisect overlay: build without the kscan sideband hold-to-reset.
+ *
+ * Disabling the node is not enough on its own -- an enabled zmk,kscan-sideband-
+ * behaviors instance with `auto-enable` installs its own callback on the inner
+ * kscan from a SYS_INIT regardless of what `chosen zmk,kscan` points at. So do
+ * both: drop the instance entirely, and point the keyboard back at the raw
+ * matrix.
+ *
+ * Everything else, including the keymap and the hold-reset behaviors, is
+ * unchanged; the behaviors are simply never invoked.
+ *
+ * Usage: see README.md "Bisecting the BLE instability".
+ */
+
+&sideband {
+    status = "disabled";
+};
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+    };
+};

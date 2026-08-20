@@ -49,10 +49,13 @@
     };
 
     /*
-     * Wraps the matrix so the top-right key (HOME, local row 0 / column 8) also
-     * runs &hold_rst locally. This is the one that matters: the peripheral runs
-     * no keymap, so without this there is no way to reset this half from its own
-     * keys once it loses the central.
+     * Wraps the matrix so the two outer top-right keys also run a reset locally.
+     * This is the half that matters: the peripheral runs no keymap, so without
+     * this there is no way to reset it from its own keys once it loses the
+     * central.
+     *
+     *   HOME    (row 0 / column 8) -> reboot
+     *   PAGE_UP (row 1 / column 8) -> reboot into the bootloader
      */
     sideband: sideband {
         compatible = "zmk,kscan-sideband-behaviors";
@@ -64,6 +67,12 @@
             row = <0>;
             column = <8>;
             bindings = <&hold_rst>;
+        };
+
+        hold_boot_key {
+            row = <1>;
+            column = <8>;
+            bindings = <&hold_boot>;
         };
     };
 };

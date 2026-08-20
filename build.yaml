@@ -26,10 +26,21 @@
 ---
 include:
   # Standard split firmware: left half is the central, right half the peripheral.
+  #
+  # ZMK Studio talks to the keyboard over USB, and only the central has USB, so
+  # the left half is the only one that gets the studio-rpc-usb-uart snippet and
+  # CONFIG_ZMK_STUDIO. The snippet adds the CDC ACM endpoint Studio connects to
+  # and compiles in every behavior so Studio can assign them. See README.md.
   - board: vua_left
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
   - board: vua_right
+  # west takes one snippet per -S flag and the shared workflow only ever passes
+  # -S once, so the build that needs both snippets sets SNIPPET through CMake
+  # instead of using the `snippet` key. Mixing the two forms is undefined, so
+  # this entry uses -DSNIPPET exclusively.
   - board: vua_left
-    snippet: nrf52840-nosd
+    cmake-args: -DSNIPPET="nrf52840-nosd;studio-rpc-usb-uart" -DCONFIG_ZMK_STUDIO=y
     artifact-name: vua_left-nosd
   - board: vua_right
     snippet: nrf52840-nosd

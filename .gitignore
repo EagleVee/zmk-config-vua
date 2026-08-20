@@ -1,2 +1,11 @@
+# Local west workspace. `west update` clones these next to config/; none of it
+# belongs to this repo. See README.md "Building locally".
 zephyr
+zmk
+modules
+tools
+bootloader
+.venv
 build
+
+.DS_Store
